@@ -42,10 +42,10 @@ while True:
             if nearest_planet:
                 break;
 
-        if ship.can_dock(planet):
-            command_queue.append(ship.dock(planet))
+        if ship.can_dock(nearest_planet):
+            command_queue.append(ship.dock(nearest_planet))
         else:
-            navigate_command = ship.navigate(ship.closes_point_to(planet), game_map, speed=htl.constants.MAX_SPEED/2, ignore_ships=True)
+            navigate_command = ship.navigate(ship.closes_point_to(nearest_planet), game_map, speed=htl.constants.MAX_SPEED/2, ignore_ships=True)
             if navigate_command:
                 command_queue.append(navigate_command)
 
