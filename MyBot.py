@@ -35,31 +35,17 @@ while True:
             # Skip this ship
             continue
 
-        entities_by_distance = game_map.nearby_entities_by_distance(ship)
-        nearest_planet = None
-        for distance in sorted(entities_by_distance):
-            nearest_planet = next((nearest_planet for nearest_entity in entities_by_distance[distance] if isinstance(nearest_entity, hlt.entity.Planet)), None)
-            if nearest_planet:
-                break;
+        for planet in game_map.all_planets():
+            if planet.is_owned():
+                continue
 
-        if ship.can_dock(nearest_planet):
-            command_queue.append(ship.dock(nearest_planet))
-        else:
-            navigate_command = ship.navigate(ship.closes_point_to(nearest_planet), game_map, speed=htl.constants.MAX_SPEED/2, ignore_ships=True)
-            if navigate_command:
-                command_queue.append(navigate_command)
-
-        # for planet in game_map.all_planets():
-        #     if planet.is_owned():
-        #         continue
-
-        #     if ship.can_dock(planet):
-        #         command_queue.append(ship.dock(planet))
-        #     else:
-        #         navigate_command = ship.navigate(ship.closest_point_to(planet), game_map, speed=hlt.constants.MAX_SPEED/2, ignore_ships=True)
-        #         if navigate_command:
-        #             command_queue.append(navigate_command)
-        #     break
+            if ship.can_dock(planet):
+                command_queue.append(ship.dock(planet))
+            else:
+                navigate_command = ship.navigate(ship.closest_point_to(planet), game_map, speed=hlt.constants.MAX_SPEED/2, ignore_ships=True)
+                if navigate_command:
+                    command_queue.append(navigate_command)
+            break
 
     # Send our set of commands to the Halite engine for this turn
     game.send_command_queue(command_queue)
