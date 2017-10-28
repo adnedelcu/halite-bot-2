@@ -2,8 +2,8 @@
 
 require_once "hlt/autoload.php";
 
-$game = new Game("Hakka");
-Logging::log("Starting my Hakka bot!");
+$game = new Game("Random");
+Logging::log("Starting my Random bot!");
 
 while(true) {
     $gameMap = $game->updateMap();
