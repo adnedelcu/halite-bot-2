@@ -121,7 +121,7 @@ class GameMap
         $entities = array_merge($this->allShips(), $this->allPlanets());
 
         foreach ($entities as $foreignEntity) {
-            if ($entity->id == $foreignEntity->id) {
+            if ($entity === $foreignEntity) {
                 continue;
             }
 
@@ -148,20 +148,20 @@ class GameMap
         $entities = [];
 
         if ($ignore == Planet::class) {
-            array_merge($entities, []);
+            $entities = array_merge($entities, []);
         } else {
-            array_merge($entities, $this->allPlanets());
+            $entities = array_merge($entities, $this->allPlanets());
         }
 
         if ($ignore == Ship::class) {
-            array_merge($entities, []);
+            $entities = array_merge($entities, []);
         } else {
-            array_merge($entities, $this->allShips());
+            $entities = array_merge($entities, $this->allShips());
         }
 
         /** @var Entity $foreignEntity */
         foreach ($entities as $foreignEntity) {
-            if ($foreignEntity->id == $ship->id || $foreignEntity->id == $target->id) {
+            if ($foreignEntity === $ship || $foreignEntity === $target) {
                 continue;
             }
 
@@ -218,7 +218,7 @@ class GameMap
         $allShips = [];
 
         foreach ($this->players as $player) {
-            array_merge($allShips, $player->allShips());
+            $allShips = array_merge($allShips, $player->allShips());
         }
 
         return $allShips;
@@ -237,7 +237,7 @@ class GameMap
 
         /** @var Entity $celestialObject */
         foreach ($celestialObjects as $celestialObject) {
-            if ($celestialObject->id == $target->id) {
+            if ($celestialObject === $target) {
                 continue;
             }
 

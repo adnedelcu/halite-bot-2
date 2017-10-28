@@ -1,1 +1,8 @@
+# halite specific files
+*.hlt
+
+# OSx specific files
 .DS_Store
+
+# other files
+*.zip

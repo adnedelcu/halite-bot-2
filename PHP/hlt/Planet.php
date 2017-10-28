@@ -67,6 +67,11 @@ class Planet extends Entity
         $this->dockedShips = [];
     }
 
+    public function __toString()
+    {
+        return "Planet (id: $this->id) at position: (x = $this->x, y = $this->y), with radius = $this->radius, owner: ".($this->owner instanceof Player ? $this->owner->id : $this->owner);
+    }
+
     /**
      * Return the docked ship designated by its id.
      *
@@ -96,7 +101,7 @@ class Planet extends Entity
      */
     public function isOwned()
     {
-        return $this->owner != null;
+        return $this->owner instanceof Player;
     }
 
     /**
@@ -120,7 +125,7 @@ class Planet extends Entity
      */
     public function link(array $players, array $planets)
     {
-        if ($this->owner != null) {
+        if ($this->owner != null && !($this->owner instanceof Player)) {
             $this->owner = $players[$this->owner];
 
             foreach ($this->dockedShipIds as $shipId) {

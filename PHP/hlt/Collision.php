@@ -32,10 +32,10 @@ class Collision
             return false;
         }
 
-        $closesX = $start->x + $dx * $t;
-        $closesY = $start->y + $dy * $t;
-        $closesPosition = new Position($closesX, $closesY);
-        $closesDistance = $closesPosition->calculateDistanceBetween($circle);
+        $closestX = $start->x + $dx * $t;
+        $closestY = $start->y + $dy * $t;
+        $closestPosition = new Position($closestX, $closestY);
+        $closestDistance = $closestPosition->calculateDistanceBetween($circle);
 
         return $closestDistance <= $circle->radius + $fudge;
     }

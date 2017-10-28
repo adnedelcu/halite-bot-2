@@ -2,7 +2,7 @@
 
 class Player
 {
-    protected $id;
+    public $id;
     protected $ships;
 
     /**
@@ -19,7 +19,7 @@ class Player
 
     public function __toString()
     {
-        return "Player {$this->id} with ships {$this->allShips()}";
+        return "Player $this->id with ships ".implode(',', $this->allShips());
     }
 
     /**

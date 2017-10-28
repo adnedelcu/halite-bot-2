@@ -76,6 +76,11 @@ class Ship extends Entity
         $this->weaponCooldown = $cooldown;
     }
 
+    public function __toString()
+    {
+        return "Ship (id: $this->id), with radius = $this->radius, status = $this->dockingStatus, owner: $this->owner";
+    }
+
     /**
      * Generate a command to accelerate this ship
      *
@@ -135,7 +140,6 @@ class Ship extends Entity
     public function navigate(Entity $target, GameMap $gameMap, $speed, $avoidObstacle = true, $maxCorrections = 90, $angularStep = 1, $ignoreShips = false, $ignorePlanets = false)
     {
         if ($maxCorrections <= 0) {
-            Logging::log("No command given to ship");
             return null;
         }
 
@@ -153,7 +157,6 @@ class Ship extends Entity
         }
 
         if ($avoidObstacle && $gameMap->obstaclesBetween($this, $target, $ignore)) {
-            Logging::log("Avoiding obstacles");
             $newTargetX = cos(deg2rad($angle + $angularStep)) * $distance;
             $newTargetY = sin(deg2rad($angle + $angularStep)) * $distance;
             $newTarget = new Position($this->x + $newTargetX, $this->y + $newTargetY);
@@ -163,7 +166,6 @@ class Ship extends Entity
 
         $speed = ($distance >= $speed) ? $speed : $distance;
 
-        Logging::log("Giving command: ".$this->thrust($speed, $angle));
         return $this->thrust($speed, $angle);
     }
 
