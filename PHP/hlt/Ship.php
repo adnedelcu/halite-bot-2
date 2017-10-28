@@ -137,8 +137,16 @@ class Ship extends Entity
      *
      * @return string
      */
-    public function navigate(Entity $target, GameMap $gameMap, $speed, $avoidObstacle = true, $maxCorrections = 90, $angularStep = 1, $ignoreShips = false, $ignorePlanets = false)
-    {
+    public function navigate(
+        Entity $target,
+        GameMap $gameMap,
+        $speed,
+        $avoidObstacle = true,
+        $maxCorrections = 20,
+        $angularStep = 1,
+        $ignoreShips = false,
+        $ignorePlanets = false
+    ) {
         if ($maxCorrections <= 0) {
             return null;
         }
@@ -160,6 +168,7 @@ class Ship extends Entity
             $newTargetX = cos(deg2rad($angle + $angularStep)) * $distance;
             $newTargetY = sin(deg2rad($angle + $angularStep)) * $distance;
             $newTarget = new Position($this->x + $newTargetX, $this->y + $newTargetY);
+            Logging::log("radians($angle + $angularStep) = ".deg2rad($angle + $angularStep));
 
             return $this->navigate($newTarget, $gameMap, $speed, true, $maxCorrections - 1, $angularStep);
         }

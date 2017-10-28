@@ -38,7 +38,10 @@ abstract class Entity
      */
     public function calculateDistanceBetween(Entity $target)
     {
-        return sqrt(pow($target->x - $this->x, 2) + pow($target->y - $this->y, 2));
+        $dx = $target->x - $this->x;
+        $dy = $target->y - $this->y;
+
+        return sqrt($dx ** 2 + $dy ** 2);
     }
 
     /**
@@ -50,7 +53,11 @@ abstract class Entity
      */
     public function calculateAngleBetween(Entity $target)
     {
-        return rad2deg(atan2($target->y - $this->y, $target->x - $this->x)) % 360;
+        Logging::log("this = ".get_class($this).", target = ".get_class($target));
+        $atan = atan2($target->y - $this->y, $target->x - $this->x);
+        Logging::log("atan2($target->y - $this->y, $target->x - $this->x) = ".$atan);
+        Logging::log("degrees($atan) = ".rad2deg($atan));
+        return rad2deg($atan) % 360;
     }
 
     /**
@@ -64,7 +71,7 @@ abstract class Entity
      */
     public function closestPointTo(Entity $target, $minDistance = 3)
     {
-        $angle = $this->calculateAngleBetween($this);
+        $angle = $target->calculateAngleBetween($this);
         $radius = $target->radius + $minDistance;
         $x = $target->x + $radius * cos(deg2rad($angle));
         $y = $target->y + $radius * sin(deg2rad($angle));
