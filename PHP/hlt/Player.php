@@ -54,8 +54,6 @@ class Player
     public static function parse(array &$tokens)
     {
         $playersNo = (int)array_shift($tokens);
-        Logging::log("Tokens remaining after retriving how many players: ".count($tokens));
-        Logging::log("Number of players: {$playersNo}");
         $players = [];
 
         for ($i = 0; $i < $playersNo; $i++) {
@@ -75,8 +73,6 @@ class Player
     protected static function parseSingle(array &$tokens)
     {
         $playerId = (int)array_shift($tokens);
-        Logging::log("Tokens remaining after retriving playerId: ".count($tokens));
-        Logging::log("Player ID: {$playerId}");
         $ships = Ship::parse($playerId, $tokens);
         $player = new Player($playerId, $ships);
 

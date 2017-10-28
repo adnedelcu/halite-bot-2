@@ -71,8 +71,6 @@ class Game
             exit;
         }
 
-        Logging::log("Got string: ".rtrim($input, "\n"));
-
         return rtrim($input, "\n");
     }
 

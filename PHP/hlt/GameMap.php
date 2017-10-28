@@ -183,13 +183,8 @@ class GameMap
     public function parse($mapString)
     {
         $tokens = preg_split("/[\s]+/", trim($mapString));
-        Logging::log("Tokens remaining after split: ".count($tokens));
-        Logging::log("MapString: {$mapString}");
-        Logging::log("Tokens: ".implode(', ', $tokens));
         $this->players = Player::parse($tokens);
-        Logging::log("Tokens remaining after player parsing: ".count($tokens));
         $this->planets = Planet::parse($tokens);
-        Logging::log("Tokens remaining after planet parsing: ".count($tokens));
 
         if (count($tokens) > 0) {
             throw new Exception("We still have something to parse: ".implode(', ', $tokens));

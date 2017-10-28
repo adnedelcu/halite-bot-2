@@ -135,7 +135,7 @@ class Ship extends Entity
     public function navigate(Entity $target, GameMap $gameMap, $speed, $avoidObstacle = true, $maxCorrections = 90, $angularStep = 1, $ignoreShips = false, $ignorePlanets = false)
     {
         if ($maxCorrections <= 0) {
-            Logging::log("Giving command: ". null);
+            Logging::log("No command given to ship");
             return null;
         }
 
@@ -163,7 +163,7 @@ class Ship extends Entity
 
         $speed = ($distance >= $speed) ? $speed : $distance;
 
-        Logging::log("Giving command: ". $this->thrust($speed, $angle));
+        Logging::log("Giving command: ".$this->thrust($speed, $angle));
         return $this->thrust($speed, $angle);
     }
 
@@ -233,12 +233,9 @@ class Ship extends Entity
         $ships = [];
 
         $numShips = (int)array_shift($tokens);
-        Logging::log("Tokens remaining after retriving how many ships: ".count($tokens));
-        Logging::log("Number of ships for player {$playerId}: {$numShips}");
 
         for ($i = 0; $i < $numShips; $i++) {
             list($shipId, $ships[$shipId]) = self::parseSingle($playerId, $tokens);
-            Logging::log("Tokens remaining after parsing single ship: ".count($tokens));
         }
 
         return $ships;
